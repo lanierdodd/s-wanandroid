@@ -1,24 +1,26 @@
 package com.lanier.wanandroid.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lanier.wanandroid.R
+import com.lanier.wanandroid.ui.search.SearchActivity
 
 class HomeFragment : Fragment() {
 
     private val viewmodel by viewModels<HomeViewModel>()
     private val mAdapter = HomeDataAdapter()
 
-    private lateinit var etSearch: EditText
-    private lateinit var btnSearch: Button
+    private lateinit var etSearch: TextView
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +33,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         etSearch = view.findViewById(R.id.etSearch)
-        btnSearch = view.findViewById(R.id.btnSearch)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = mAdapter
@@ -49,7 +50,9 @@ class HomeFragment : Fragment() {
             }
         })
 
-        btnSearch.setOnClickListener {
+        etSearch.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
         }
 
         viewmodel.homeDataLiveData.observe(viewLifecycleOwner) {
