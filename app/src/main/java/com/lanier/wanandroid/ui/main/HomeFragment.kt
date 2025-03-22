@@ -1,4 +1,4 @@
-package com.lanier.wanandroid.ui
+package com.lanier.wanandroid.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

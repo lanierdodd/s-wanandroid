@@ -14,4 +14,10 @@ interface WanAndroidAPI {
      */
     @GET("/article/list/{page}/json")
     fun getHomeData(@Path("page") page: Int) : Call<HomeDataEntity>
+
+    /**
+     * 获取广场数据，从0开始
+     */
+    @GET("/user_article/list/{page}/json")
+    fun getPlazaData(@Path("page") page: Int) : Call<HomeDataEntity>
 }

@@ -1,4 +1,4 @@
-package com.lanier.wanandroid.ui
+package com.lanier.wanandroid.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +24,33 @@ class HomeViewModel : ViewModel() {
             page = 0
         }
         APIService.api.getHomeData(page)
+            .enqueue(object : Callback<HomeDataEntity> {
+                override fun onResponse(
+                    p0: Call<HomeDataEntity?>,
+                    p1: Response<HomeDataEntity?>
+                ) {
+                    val origin = p1.body()
+                    if (origin != null) {
+                        homeDataLiveData.postValue(origin.data.datas)
+                        val hasNext = origin.data.offset <= origin.data.total
+                        if (hasNext) page++
+                    }
+                }
+
+                override fun onFailure(
+                    p0: Call<HomeDataEntity?>,
+                    p1: Throwable
+                ) {
+                }
+            })
+    }
+
+    fun showPlazaData(refresh: Boolean = false) {
+        isRefresh = refresh
+        if (refresh) {
+            page = 0
+        }
+        APIService.api.getPlazaData(page)
             .enqueue(object : Callback<HomeDataEntity> {
                 override fun onResponse(
                     p0: Call<HomeDataEntity?>,
